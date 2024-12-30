@@ -1,3 +1,9 @@
+type Config = {
+    token: string,
+    baseUrl: string,
+};
+
+
 type QueryBody = {
     qtype: string,
     query: string,
@@ -28,7 +34,7 @@ export abstract class QueryBase {
         return await fetch(url, {
             headers,
             body: JSON.stringify(query),
-            method: HttpMethods.POST
+            method: "POST"
         }).then(response => {
             if (!response.ok) {
                 return response.json();

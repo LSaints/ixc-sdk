@@ -55,15 +55,22 @@ export class Clientes extends QueryBase {
      * const clientes = await clientes.buscarClientesPorCpfCnpj('12345678901');
      * // clientes = [{ id: 1, nome: 'Fulano', cpf_cnpj: '12345678901', ... }]
      */
-    async buscarClientesPorCpfCnpj(cpfCnpj: string): Promise<Cliente[]> {
-        return await this.request<Cliente[]>(resourceName, {
-            qtype: 'cliente.cpf_cnpj',
-            query: cpfCnpj,
-            oper: '=',
-            page: 1,
-            sortname: 'cliente.cpf_cnpj',
-            sortorder: 'asc'
-        });
+    async buscarClientesPorCpfCnpj(cpfCnpj: string): Promise<Cliente | null> {
+        try {
+            const response = await this.request<Cliente[]>(resourceName, {
+                qtype: 'cliente.cpf_cnpj',
+                query: cpfCnpj,
+                oper: '=',
+                page: 1,
+                sortname: 'cliente.cpf_cnpj',
+                sortorder: 'asc'
+            });
+            return response[0]
+        } catch (error) {
+            
+            console.error('Erro ao realizar a requisição:', error);
+            return null;
+        }
     }
 
     /**
