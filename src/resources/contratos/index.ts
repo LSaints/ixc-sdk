@@ -1,5 +1,5 @@
-import { QueryBase } from "../base";
-import { Contrato, ContratoAttrs } from "./types";
+import { QueryBase, QueryBody } from "../base";
+import { Contrato, ContratoAttrs, ContratoResponse } from "./types";
 
 const resourceName = "v1/cliente_contrato";
 
@@ -82,22 +82,22 @@ export class Contratos extends QueryBase {
      * // contratos = [{ id: 1, id_cliente: 123, ... }, ...]
      */
     async buscarContratosPorIdCliente(id: number): Promise<Contrato[]> {
-        const contratos = await this.request<Contrato[]>(resourceName, {
-            qtype: 'contrato.id_cliente',
+        const query: QueryBody = {
+            qtype: 'cliente_contrato.id_cliente',
             query: id.toString(),
             oper: '=',
             page: 1,
-            sortname: 'contrato.id',
+            sortname: 'cliente_contrato.id',
             sortorder: 'asc'
-        })
+        }
 
-        // Verifica se a resposta   nula ou vazia
-        if (contratos.length === 0 || !contratos) {
+        const contratos = await this.request<ContratoResponse>(resourceName, query);
+
+        if (contratos.registros.length === 0 || !contratos) {
             return [];
         };
 
-        // Retorna o array de contratos
-        return contratos;
+        return contratos.registros;
     }
 
     /**

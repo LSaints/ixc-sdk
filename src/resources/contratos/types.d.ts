@@ -1,3 +1,5 @@
+import { ResponseBody } from "../base";
+
 export declare type Contrato = {
     'id': number,
     'tipo': 'I' | string,
@@ -157,6 +159,8 @@ export declare type Contrato = {
     'testemunha_assinatura_digital': string,
     'document_photo': 'P' | 'N',
     'selfie_photo': 'P' | 'N'
-}
+};
+
+export declare type ContratoResponse = ResponseBody<Contrato>;
 
 export declare type ContratoAttrs = keyof Contrato;

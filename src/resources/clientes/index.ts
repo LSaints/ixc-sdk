@@ -1,5 +1,5 @@
-import { QueryBase } from "../base";
-import { Cliente, ClienteAttrs } from "./types";
+import { QueryBase, QueryBody } from "../base";
+import { Cliente, ClienteAttrs, ClienteResponse } from "./types";
 
 const resourceName = "v1/cliente";
 
@@ -53,24 +53,20 @@ export class Clientes extends QueryBase {
      *
      * @example
      * const clientes = await clientes.buscarClientesPorCpfCnpj('12345678901');
-     * // clientes = [{ id: 1, nome: 'Fulano', cpf_cnpj: '12345678901', ... }]
+     * // clientes = { id: 1, nome: 'Fulano', cpf_cnpj: '12345678901', ... }
      */
     async buscarClientesPorCpfCnpj(cpfCnpj: string): Promise<Cliente | null> {
-        try {
-            const response = await this.request<Cliente[]>(resourceName, {
-                qtype: 'cliente.cpf_cnpj',
-                query: cpfCnpj,
-                oper: '=',
-                page: 1,
-                sortname: 'cliente.cpf_cnpj',
-                sortorder: 'asc'
-            });
-            return response[0]
-        } catch (error) {
-            
-            console.error('Erro ao realizar a requisição:', error);
-            return null;
+        const query: QueryBody = {
+            qtype: 'cliente.cnpj_cpf',
+            query: cpfCnpj,
+            oper: '=',
+            page: 1,
+            sortname: 'cliente.cnpj_cpf',
+            sortorder: 'asc'
         }
+
+        const response = await this.request<ClienteResponse>(resourceName, query);
+        return response.registros[0]
     }
 
     /**
@@ -84,13 +80,16 @@ export class Clientes extends QueryBase {
      * // cliente = { id: 1, nome: 'Fulano', cpf_cnpj: '12345678901', ... }
      */
     async buscarClientesPorId(id: number): Promise<Cliente> {
-        return await this.request<Cliente>(resourceName, {
+        const query: QueryBody = {
             qtype: 'cliente.id',
             query: id.toString(),
             oper: '=',
             page: 1,
             sortname: 'cliente.id',
             sortorder: 'asc'
-        });
+        }
+
+        const cliente = await this.request<ClienteResponse>(resourceName, query);
+        return cliente.registros[0]
     }
 }

@@ -1,3 +1,5 @@
+import { ResponseBody } from "../base";
+
 export declare type Cliente = {
     'id': number,
     'ativo': 'S',
@@ -159,6 +161,8 @@ export declare type Cliente = {
     'ref_pes_fone2': string,
     'obs': string,
     'alerta': string
-}
+};
+
+export type ClienteResponse = ResponseBody<Cliente>
 
 export declare type ClienteAttrs = keyof Cliente;

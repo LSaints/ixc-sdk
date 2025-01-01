@@ -3,8 +3,13 @@ type Config = {
     baseUrl: string,
 };
 
+export declare type ResponseBody<T> = {
+    page: string,
+    total: number,
+    registros: T[],
+}
 
-type QueryBody = {
+export declare type QueryBody = {
     qtype: string,
     query: string,
     oper: '>' | '<' | '=' | 'like',
@@ -25,21 +30,17 @@ export abstract class QueryBase {
 
     protected async request<T>(endpoint: string, query: QueryBody): Promise<T> {
         const url = `${this.baseUrl}${endpoint}`;
+        const token = `Basic ${btoa(this.apiKey).toString()}`
         const headers = {
             'Content-Type': 'application/json',
-            'Authorization': `Basic ${this.apiKey}`,
+            'Authorization': token,
             'ixcsoft': 'listar'
         };
 
         return await fetch(url, {
+            method: "POST",
             headers,
             body: JSON.stringify(query),
-            method: "POST"
-        }).then(response => {
-            if (!response.ok) {
-                return response.json();
-            }
-            throw new Error(response.statusText);
-        });
+        }).then(response => response.json());
     }
 }
