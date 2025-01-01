@@ -3,6 +3,10 @@ import { Contrato, ContratoAttrs, ContratoResponse } from "./types";
 
 const resourceName = "v1/cliente_contrato";
 
+
+/**
+ * Classe para gerenciar contratos.
+ */
 export class Contratos extends QueryBase {
 
     /**

@@ -3,6 +3,9 @@ import { Cliente, ClienteAttrs, ClienteResponse } from "./types";
 
 const resourceName = "v1/cliente";
 
+/**
+ * Classe para gerenciar clientes
+ */
 export class Clientes extends QueryBase {
 
     /**
