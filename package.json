@@ -1,27 +1,29 @@
 {
   "name": "ixc-sdk",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "SDK para integração com a API do ERP IXC, facilitando o acesso e manipulação de dados através de endpoints REST",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "npm run build",
-    "build": "tsc",
+    "build": "rm -rf dist && microbundle --tsconfig tsconfig.json --no-sourcemap",
     "docs": "typedoc"
   },
   "keywords": [
     "SDK",
     "ERP",
-    "IXC"
+    "IXC",
+    "typescript"
   ],
   "author": "LSaints",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "eslint": "^9.17.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "globals": "^15.14.0",
+    "microbundle": "^0.15.1",
     "prettier": "^3.4.2",
     "typedoc": "^0.27.6",
     "typedoc-plugin-markdown": "^4.4.0",
@@ -74,6 +76,7 @@
     "is-glob": "^4.0.3",
     "is-number": "^7.0.0",
     "isexe": "^2.0.0",
+    "ixc-sdk": "^0.1.0",
     "js-yaml": "^4.1.0",
     "json-buffer": "^3.0.1",
     "json-schema-traverse": "^0.4.1",

@@ -1,0 +1,30 @@
+name: Publicar pacote no NPM
+
+on:
+    push:
+        tags:
+            - 'v*.*.*'
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checar Código
+              uses: actions/checkout@v2
+
+            - name: Configurar Node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 14
+                  registry-url: https://registry.npmjs.org/
+
+            - name: Instalar dependências
+              run: npm install
+            
+            - name: Realizar biuld
+              run: npm run build
+
+            - name: Publicar pacote
+              run: npm publish
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
