@@ -34,11 +34,11 @@ export class Contratos extends QueryBase {
         sortAttr: ContratoAttrs = 'id_cliente',  
         sortorder: 'desc' | 'asc' = 'desc'
     ): Promise<Contrato[]> {
-
+    
         const key = Object.keys(attr)[0] as ContratoAttrs;
         const value = attr[key];
-
-        return await this.request<Contrato[]>(resourceName, {
+    
+        const response = await this.request<{ registros: Contrato[] }>(resourceName, {
             qtype: `contrato.${key}`,
             query: value as string,
             oper: oper,
@@ -46,7 +46,11 @@ export class Contratos extends QueryBase {
             sortname: `contrato.${sortAttr as string}`,
             sortorder: sortorder
         });
+    
+        return response.registros;
     }
+    
+    
 
     /**
      * Busca um contrato pelo seu id.
@@ -58,22 +62,20 @@ export class Contratos extends QueryBase {
      * const contratos = await contratos.buscarContratosPorId(123);
      * // contratos = [{ id: 123, id_cliente: 1, ... }]
      */
-    async buscarContratosPorId(id: number): Promise<Contrato[]> {
-        const contratos = await this.request<Contrato[]>(resourceName, {
-            qtype: 'contrato.id',
+    async buscarContratosPorId(id: number): Promise<Contrato> {
+        const query: QueryBody = {
+            qtype: 'cliente_contrato.id',
             query: id.toString(),
             oper: '=',
             page: 1,
-            sortname: 'contrato.id',
-            sortorder: 'asc'
-        });
-
-        if (contratos.length === 0 || !contratos) {
-            return [];
+            sortname: 'cliente_contrato.id',
+            sortorder: 'asc',
         };
-
-        return contratos;
+    
+        const response = await this.request<ContratoResponse>('v1/cliente_contrato', query);
+        return response.registros[0];
     }
+    
 
     /**
      * Busca contratos por id de cliente.
@@ -102,32 +104,5 @@ export class Contratos extends QueryBase {
         };
 
         return contratos.registros;
-    }
-
-    /**
-     * Busca contratos com base no id do contrato.
-     *
-     * @param id - O id do contrato a ser buscado.
-     * @returns Uma promessa que resolve para um array de objetos `Contrato` que correspondem ao id do contrato especificado.
-     *
-     * @example
-     * const contratos = await contratos.buscarContratoPorIdContrato(123);
-     * // contratos = [{ id: 1, id_contrato: 123, ... }]
-     */
-    async buscarContratoPorIdContrato(id: number): Promise<Contrato[] | Contrato> {
-        const contrato = await this.request<Contrato[]>(resourceName, {
-            qtype: 'contrato.id_contrato',
-            query: id.toString(),
-            oper: '=',
-            page: 1,
-            sortname: 'contrato.id',
-            sortorder: 'asc'
-        });
-
-        if (contrato.length === 0 || !contrato) {
-            return [];
-        };
-
-        return contrato[0];
     }
 }

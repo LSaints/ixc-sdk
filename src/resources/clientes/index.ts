@@ -7,6 +7,9 @@ const resourceName = "v1/cliente";
  * Classe para gerenciar clientes
  */
 export class Clientes extends QueryBase {
+    static buscarClientesPorCpfCnpj(arg0: string) {
+        throw new Error('Method not implemented.');
+    }
 
     /**
      * Filtra clientes com base nos atributos fornecidos.
@@ -26,27 +29,29 @@ export class Clientes extends QueryBase {
      */
 
     async filtrarClientes(
-        attr: { 
-            [K in ClienteAttrs]: string | number | boolean 
-        },
+        attr: { [K in ClienteAttrs]: string | number | boolean },
         oper: '>' | '<' | '=' | 'like' = '=',  
         page: number = 1,  
         sortAttr: ClienteAttrs = 'cnpj_cpf',  
         sortorder: 'desc' | 'asc' = 'desc'
     ): Promise<Cliente[]> {
-
+    
         const key = Object.keys(attr)[0] as ClienteAttrs;
         const value = attr[key];
-
-        return await this.request<Cliente[]>(resourceName, {
+    
+        const response = await this.request<{ registros: Cliente[] }>(resourceName, {
             qtype: `cliente.${key}`,
             query: value as string,
             oper: oper,
             page: page,
-            sortname: `cliente.${sortAttr as string}`,
+            sortname: `cliente.${sortAttr}`,
             sortorder: sortorder,
         });
+    
+        // Retornar apenas os registros
+        return response.registros;
     }
+    
 
     /**
      * Busca clientes com base em um CPF/CNPJ.

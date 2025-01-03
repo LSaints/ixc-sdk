@@ -1,1 +1,7 @@
-/testing
+testing
+src
+docs
+scripts
+.github
+coverage
+.env

@@ -57,7 +57,7 @@ export abstract class QueryBase {
      * @param query - O objeto de consulta com os par metros para a requisição.
      * @returns Uma promessa que resolve para a resposta da API.
      */
-    protected async request<T>(endpoint: string, query: QueryBody): Promise<T> {
+    public async request<T>(endpoint: string, query: QueryBody): Promise<T> {
         const url = `${this.baseUrl}${endpoint}`;
         const token = `Basic ${btoa(this.apiKey).toString()}`
         const headers = {

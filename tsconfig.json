@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@tests/*": ["tests/*"]
+    },
+    "types": ["jest"],
+    "moduleResolution": "node",
     "target": "ES2015", 
     "module": "commonjs", 
     "strict": true, 
@@ -9,5 +15,5 @@
     "declaration": true,
     "outDir": "./dist",
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "tests/**/*"],
 }
