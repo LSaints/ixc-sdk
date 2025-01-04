@@ -23,12 +23,7 @@ jobs:
               run: npm install
             
             - name: Publicar apenas a pasta dist
-              run: |
-                cp package.json dist/
-                cp README.md dist/
-                cp LICENSE dist/ || true
-                cd dist
-                npm publish
+              run: npm publish 
 
             - name: Publicar pacote
               run: npm publish

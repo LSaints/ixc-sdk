@@ -1,4 +1,4 @@
-# **IXC SDK v0.1.2*
+# **IXC SDK v0.1.5*
 
 ![IXC SDK](https://img.shields.io/badge/IXC--SDK-v1.0.0-blue.svg)  
 ![License](https://img.shields.io/badge/license-MIT-green.svg)  
