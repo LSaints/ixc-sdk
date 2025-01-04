@@ -7,7 +7,7 @@ import { Contratos } from "./resources/contratos";
  * Esta classe fornece acesso a diferentes recursos, como `Clientes` e `Contratos`,
  * configurados através de um token de autenticação e uma URL base.
  */
-export class Ixc {
+export default class Ixc {
     /** Recurso para gerenciar clientes. */
     clientes: Clientes;
 

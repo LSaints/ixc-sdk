@@ -22,8 +22,13 @@ jobs:
             - name: Instalar dependências
               run: npm install
             
-            - name: Realizar biuld
-              run: npm run build
+            - name: Publicar apenas a pasta dist
+              run: |
+                cp package.json dist/
+                cp README.md dist/
+                cp LICENSE dist/ || true
+                cd dist
+                npm publish
 
             - name: Publicar pacote
               run: npm publish
