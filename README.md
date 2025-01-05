@@ -33,7 +33,7 @@ npm install ixc-sdk
 
 Antes de começar, configure o SDK com o token de autenticação e a baseUrl da API:
 ```TS
-import { Ixc } from "ixc-sdk";
+import Ixc from "ixc-sdk";
 
 const ixc = new Ixc({
     token: "SEU_TOKEN_AQUI",
